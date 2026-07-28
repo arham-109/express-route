@@ -1,0 +1,25 @@
+{
+  "name": "express-route",
+  "version": "1.0.0",
+  "description": "",
+  "homepage": "https://github.com/arham-109/express-route#readme",
+  "bugs": {
+    "url": "https://github.com/arham-109/express-route/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/arham-109/express-route.git"
+  },
+  "license": "ISC",
+  "author": "",
+  "type": "commonjs",
+  "main": "server.mjs",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.mjs",
+    "dev": "nodemon server.mjs"
+  },
+  "dependencies": {
+    "express": "^5.2.1"
+  }
+}
