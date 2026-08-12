@@ -55,6 +55,31 @@ const App: React.FC = () => {
     }
   };
 
+  const handleEdit = async (postId: any) => {
+    const updated_title = prompt("Enter Updated title", title);
+    const updated_description = prompt("Enter updated description", desc);
+    try {
+      await axios.put(`http://localhost:3000/api/v1/post/${postId}`, {
+        title: updated_title,
+        desc: updated_description,
+      });
+    } catch (error) {
+      console.error(error);
+    }
+  };
+  fetchPosts();
+
+  const handleDelete = async (postId: any) => {
+    try {
+      await axios.delete(`http://localhost:3000/api/v1/post/${postId}`);
+      alert("Post deleted Successfully");
+      return;
+    } catch (error) {
+      console.error(error);
+    }
+  };
+  fetchPosts();
+
   return (
     <div className="max-w-screen">
       <div className="flex p-10">
@@ -82,12 +107,18 @@ const App: React.FC = () => {
             Submit
           </button>
         </form>
-      </div >
+      </div>
       <div className="flex flex-col gap-10">
         {posts.map((singlePost, index) => (
           <div key={singlePost.id ?? index} className="border p-4">
             <h2 className="font-bold text-2xl">{singlePost.title}</h2>
             <p>{singlePost.desc}</p>
+            <div className="flex justify-start items-start gap-10">
+              <button onClick={() => handleEdit(singlePost.id)}>Edit</button>
+              <button onClick={() => handleDelete(singlePost.id)}>
+                delete
+              </button>
+            </div>
           </div>
         ))}
       </div>
