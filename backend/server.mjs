@@ -7,7 +7,7 @@ const port = process.env.port || 3000;
 
 //It is called a body parser middleware
 app.use(express.json());
-app.use(cors({ origin: process.env.CLIENT_URL || "http://localhost:5173" }));
+app.use(cors({ origin: process.env.CLIENT_URL || "express-route-todo.vercel.app" }));
 app.get("/", (req, res) => {
   res.send({
     message: "Hello World",
