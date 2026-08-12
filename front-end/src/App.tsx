@@ -15,7 +15,7 @@ const App: React.FC = () => {
   const fetchPosts = async () => {
     try {
       const response = await axios.get<{ allPost: Post[] }>(
-        "http://localhost:3000/api/v1/post",
+        "https://express-route.up.railway.app/api/v1/post",
       );
       setPosts(response.data.allPost ?? []);
     } catch (error) {
@@ -42,7 +42,7 @@ const App: React.FC = () => {
     }
 
     try {
-      await axios.post("http://localhost:3000/api/v1/post", {
+      await axios.post("https://express-route.up.railway.app/api/v1/post", {
         title,
         desc,
       });
@@ -59,7 +59,7 @@ const App: React.FC = () => {
     const updated_title = prompt("Enter Updated title", title);
     const updated_description = prompt("Enter updated description", desc);
     try {
-      await axios.put(`http://localhost:3000/api/v1/post/${postId}`, {
+      await axios.put(`https://express-route.up.railway.app/api/v1/post/${postId}`, {
         title: updated_title,
         desc: updated_description,
       });
@@ -71,7 +71,7 @@ const App: React.FC = () => {
 
   const handleDelete = async (postId: any) => {
     try {
-      await axios.delete(`http://localhost:3000/api/v1/post/${postId}`);
+      await axios.delete(`https://express-route.up.railway.app/api/v1/post/${postId}`);
       alert("Post deleted Successfully");
       return;
     } catch (error) {
