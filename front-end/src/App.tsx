@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import axios from "axios";
 
 interface Post {
@@ -12,7 +12,7 @@ const App: React.FC = () => {
   const [desc, setDesc] = useState("");
   const [posts, setPosts] = useState<Post[]>([]);
 
-  const fetchPosts = async () => {
+  const fetchPosts = useCallback(async () => {
     try {
       const response = await axios.get<{ allPost: Post[] }>(
         "https://express-route.up.railway.app/api/v1/post",
@@ -22,11 +22,11 @@ const App: React.FC = () => {
       console.error("Failed to load posts:", error);
       setPosts([]);
     }
-  };
+  }, []);
 
   useEffect(() => {
-    fetchPosts();
-  }, []);
+    void fetchPosts();
+  }, [fetchPosts]);
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -49,7 +49,7 @@ const App: React.FC = () => {
 
       setTitle("");
       setDesc("");
-      fetchPosts();
+      void fetchPosts();
     } catch (error) {
       console.error("Failed to submit post:", error);
     }
@@ -59,27 +59,28 @@ const App: React.FC = () => {
     const updated_title = prompt("Enter Updated title", title);
     const updated_description = prompt("Enter updated description", desc);
     try {
-      await axios.put(`https://express-route.up.railway.app/api/v1/post/${postId}`, {
-        title: updated_title,
-        desc: updated_description,
-      });
+      await axios.put(
+        `https://express-route.up.railway.app/api/v1/post/${postId}`,
+        {
+          title: updated_title,
+          desc: updated_description,
+        },
+      );
     } catch (error) {
       console.error(error);
     }
   };
-  fetchPosts();
-
   const handleDelete = async (postId: any) => {
     try {
-      await axios.delete(`https://express-route.up.railway.app/api/v1/post/${postId}`);
+      await axios.delete(
+        `https://express-route.up.railway.app/api/v1/post/${postId}`,
+      );
       alert("Post deleted Successfully");
       return;
     } catch (error) {
       console.error(error);
     }
   };
-  fetchPosts();
-
   return (
     <div className="max-w-screen">
       <div className="flex p-10">
